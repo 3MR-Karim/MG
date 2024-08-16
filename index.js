@@ -1,50 +1,216 @@
 document.addEventListener("DOMContentLoaded", () => {
   const prevButton = document.querySelector(".prev");
   const nextButton = document.querySelector(".next");
-  const slidesContainer = document.querySelector(".carousel-slide");
-  const slides = document.querySelectorAll(".slide");
-  const totalSlides = slides.length;
+  const slides = document.querySelectorAll(".innerMainnOne");
+  const dots = document.querySelectorAll(".dot");
   let currentSlide = 0;
-
-  function updateSlideIndicator() {
-    const slideIndicator = document.getElementById("current-slide");
-    if (slideIndicator) {
-      slideIndicator.textContent = `${currentSlide + 1}/${totalSlides}`;
-    }
-  }
+  const totalSlides = slides.length;
 
   function showSlide(index) {
-    if (index < 0) index = totalSlides - 1;
-    if (index >= totalSlides) index = 0;
-    slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === index);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === index);
+    });
     currentSlide = index;
-    updateSlideIndicator();
   }
 
   prevButton.addEventListener("click", () => {
-    showSlide(currentSlide - 1);
+    showSlide((currentSlide - 1 + totalSlides) % totalSlides);
   });
 
   nextButton.addEventListener("click", () => {
-    showSlide(currentSlide + 1);
+    showSlide((currentSlide + 1) % totalSlides);
   });
 
-  // Initialize the slide indicator
-  updateSlideIndicator();
+  dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      showSlide(index);
+    });
+  });
 
   // Automatically change slides every 5 seconds (optional)
   setInterval(() => {
-    showSlide(currentSlide + 1);
+    showSlide((currentSlide + 1) % totalSlides);
   }, 5000);
 });
 
-// -____________________________
+// ___________________________________
 
-document.querySelectorAll(".economic-impact .item").forEach((item) => {
-  item.addEventListener("click", () => {
-    item.classList.toggle("active");
+document.addEventListener("scroll", function () {
+  const header = document.querySelector("header");
+  const navOne = document.querySelector(".navOne");
+  const buttonNavTwo = document.querySelector(".buttonNavTwo");
+  const navTwoImg = document.querySelector(".navTwoImg ");
+  const links = document.querySelectorAll(".navTwo ul li a");
+
+  if (window.scrollY > 1) {
+    header.classList.add("nav-scrolled");
+    navTwoImg.style.display = "block";
+    buttonNavTwo.style.display = "flex";
+    navOne.style.display = "none";
+
+    links.forEach((link) => {
+      link.style.color = "black";
+    });
+
+    buttonNavTwo.querySelectorAll("button").forEach((button) => {
+      button.style.color = "black";
+    });
+  } else {
+    header.classList.remove("nav-scrolled");
+    navTwoImg.style.display = "none";
+    navOne.style.display = "flex";
+    // استخدم "flex" للحفاظ على التنسيق
+
+    links.forEach((link) => {
+      link.style.color = ""; // يمكن تغيير اللون إلى القيمة الافتراضية أو تركه فارغًا
+    });
+
+    // إعادة اللون الافتراضي لنصوص الأزرار (إذا كان هناك نصوص في الأزرار)
+    buttonNavTwo.querySelectorAll("button").forEach((button) => {
+      button.style.color = ""; // يمكن تغيير اللون إلى القيمة الافتراضية أو تركه فارغًا
+    });
+  }
+});
+
+/*
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+*/
+
+/*
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+*/
+document.addEventListener("scroll", function () {
+  const header = document.querySelector("header");
+  const navOne = document.querySelector(".navOne");
+  const buttonNavTwo = document.querySelector(".buttonNavTwo");
+  const navTwoImg = document.querySelector(".navTwoImg ");
+  const links = document.querySelectorAll(".navTwo ul li a");
+
+  if (window.scrollY > 1) {
+    header.classList.add("nav-scrolled");
+    navTwoImg.style.display = "block";
+    buttonNavTwo.style.display = "flex"; // استخدم "flex" إذا كانت الأزرار بحاجة إلى تنسيق باستخدام Flexbox
+    navOne.style.display = "none";
+
+    // تغيير لون النص لكل رابط
+    links.forEach((link) => {
+      link.style.color = "black";
+    });
+
+    // تغيير لون النص داخل الأزرار (إذا كان هناك نصوص في الأزرار)
+    buttonNavTwo.querySelectorAll("button").forEach((button) => {
+      button.style.color = "black";
+    });
+  } else {
+    header.classList.remove("nav-scrolled");
+    navTwoImg.style.display = "none";
+    navOne.style.display = "flex"; // استخدم "flex" للحفاظ على التنسيق
+
+    // إعادة اللون الافتراضي للنصوص
+    links.forEach((link) => {
+      link.style.color = ""; // يمكن تغيير اللون إلى القيمة الافتراضية أو تركه فارغًا
+    });
+
+    // إعادة اللون الافتراضي لنصوص الأزرار (إذا كان هناك نصوص في الأزرار)
+    buttonNavTwo.querySelectorAll("button").forEach((button) => {
+      button.style.color = ""; // يمكن تغيير اللون إلى القيمة الافتراضية أو تركه فارغًا
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.querySelector(".menu-toggle");
+  const closeBtn = document.querySelector(".close-bttn");
+  const sidebar = document.querySelector(".sidebar");
+
+  menuToggle.addEventListener("click", () => {
+    sidebar.classList.add("open");
+    document.body.style.overflow = "hidden"; // تعطيل التمرير
+  });
+
+  closeBtn.addEventListener("click", () => {
+    sidebar.classList.remove("open");
+    document.body.style.overflow = ""; // تمكين التمرير
   });
 });
+
+/*
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+_____
+*/
+
+// _________\\
+// _________\\
+// _________\\
 
 // //
 
@@ -87,44 +253,38 @@ const items = document.querySelectorAll(".InnerCsrouslel > div");
 const prevButton = document.querySelector(".prevv");
 const nextButton = document.querySelector(".nextt");
 const totalItems = items.length;
-const slideInterval = 3000; // الوقت بين التبديلات التلقائية (بالميللي ثانية)
+const slideInterval = 3000;
 
-// تحديث العرض
 function updateEvent() {
   items.forEach((item, index) => {
-    item.style.opacity = index === indexo ? "1" : "0"; // عرض أو إخفاء العناصر بالشفافية
-    item.style.position = index === indexo ? "relative" : "absolute"; // تكديس العناصر فوق بعضها البعض
+    item.style.opacity = index === indexo ? "1" : "0";
+    item.style.position = index === indexo ? "relative" : "absolute";
   });
 
-  // تحديث مؤشر الشريحة الحالية
   document.querySelector(".current-slide").textContent = `${
     indexo + 1
   }/${totalItems}`;
 }
 
-// الانتقال إلى الشريحة السابقة
 prevButton.addEventListener("click", function () {
-  indexo = (indexo - 1 + totalItems) % totalItems; // الانتقال إلى العنصر السابق
+  indexo = (indexo - 1 + totalItems) % totalItems;
   updateEvent();
 });
 
-// الانتقال إلى الشريحة التالية
 nextButton.addEventListener("click", function () {
-  indexo = (indexo + 1) % totalItems; // الانتقال إلى العنصر التالي
+  indexo = (indexo + 1) % totalItems;
   updateEvent();
 });
 
-// التبديل التلقائي
 let autoSlide = setInterval(() => {
-  indexo = (indexo + 1) % totalItems; // الانتقال إلى العنصر التالي
+  indexo = (indexo + 1) % totalItems;
   updateEvent();
 }, slideInterval);
 
-// إيقاف التبديل التلقائي عند التفاعل مع الأزرار
 function resetAutoSlide() {
   clearInterval(autoSlide);
   autoSlide = setInterval(() => {
-    indexo = (indexo + 1) % totalItems; // الانتقال إلى العنصر التالي
+    indexo = (indexo + 1) % totalItems;
     updateEvent();
   }, slideInterval);
 }
@@ -132,7 +292,6 @@ function resetAutoSlide() {
 prevButton.addEventListener("click", resetAutoSlide);
 nextButton.addEventListener("click", resetAutoSlide);
 
-// التحديث الأولي
 updateEvent();
 
 ____________________________;
@@ -255,34 +414,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
   const statsContainer = document.querySelector(".stats");
+  const items = Array.from(statsContainer.children);
   let isDown = false;
   let startX;
-  let scrollLeft;
+  let currentIndex = 0;
 
-  statsContainer.addEventListener("mousedown", (e) => {
+  statsContainer.addEventListener("touchstart", (e) => {
     isDown = true;
-    statsContainer.classList.add("active");
-    startX = e.pageX - statsContainer.offsetLeft;
-    scrollLeft = statsContainer.scrollLeft;
+    startX = e.touches[0].pageX;
   });
 
-  statsContainer.addEventListener("mouseleave", () => {
+  statsContainer.addEventListener("touchend", (e) => {
+    if (!isDown) return;
     isDown = false;
-    statsContainer.classList.remove("active");
+    const moveX = e.changedTouches[0].pageX - startX;
+    const threshold = 50; // Adjust threshold for swipe sensitivity
+    if (moveX > threshold && currentIndex > 0) {
+      currentIndex--;
+    } else if (moveX < -threshold && currentIndex < items.length - 1) {
+      currentIndex++;
+    }
+    items[currentIndex].scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+    });
   });
 
-  statsContainer.addEventListener("mouseup", () => {
-    isDown = false;
-    statsContainer.classList.remove("active");
-  });
-
-  statsContainer.addEventListener("mousemove", (e) => {
+  statsContainer.addEventListener("touchmove", (e) => {
     if (!isDown) return;
     e.preventDefault();
-    const x = e.pageX - statsContainer.offsetLeft;
-    const walk = (x - startX) * 3; // scroll-fast
-    statsContainer.scrollLeft = scrollLeft - walk;
   });
 });
+
 // __________________________________________________-
 // __________________________________________________-
